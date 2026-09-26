@@ -1,505 +1,573 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>바람막이 로고 목업 스튜디오</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    :root {
-      --bg-dark: #0f172a;
-      --panel-bg: rgba(30, 41, 59, 0.7);
-      --card-bg: rgba(51, 65, 85, 0.4);
-      --border-color: rgba(255, 255, 255, 0.1);
-      --primary: #3b82f6;
-      --primary-hover: #2563eb;
-      --accent: #06b6d4;
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: var(--bg-dark);
-      background-image: radial-gradient(circle at 50% 0%, #1e293b 0%, #0f172a 100%);
-      color: var(--text-main);
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-      overflow: hidden;
-    }
-
-    header {
-      padding: 16px 28px;
-      background: rgba(15, 23, 42, 0.8);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border-color);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 10;
-    }
-    .brand { display: flex; align-items: center; gap: 12px; }
-    .brand-icon {
-      width: 36px; height: 36px; background: linear-gradient(135deg, #3b82f6, #06b6d4);
-      border-radius: 10px; display: flex; align-items: center; justify-content: center;
-      font-size: 1.1rem; color: #fff; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-    }
-    .brand h1 { font-size: 1.15rem; font-weight: 700; color: #fff; letter-spacing: -0.3px; }
-    .brand span { font-size: 0.8rem; color: var(--text-muted); }
-
-    .app-body { display: flex; flex: 1; overflow: hidden; }
-
-    .sidebar {
-      width: 360px;
-      background: var(--panel-bg);
-      backdrop-filter: blur(16px);
-      border-right: 1px solid var(--border-color);
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      overflow-y: auto;
-    }
-
-    .card {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 16px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-    }
-
-    .section-title {
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: var(--accent);
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .file-input-wrapper {
-      position: relative;
-      border: 2px dashed rgba(59, 130, 246, 0.4);
-      border-radius: 10px;
-      padding: 18px 12px;
-      text-align: center;
-      cursor: pointer;
-      background: rgba(59, 130, 246, 0.05);
-      transition: all 0.25s ease;
-    }
-    .file-input-wrapper:hover {
-      background: rgba(59, 130, 246, 0.12);
-      border-color: var(--primary);
-      transform: translateY(-1px);
-    }
-    .file-input-wrapper input {
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      opacity: 0; cursor: pointer;
-    }
-
-    .preset-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 8px;
-    }
-
-    .btn {
-      padding: 10px 12px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--border-color);
-      color: #e2e8f0;
-      border-radius: 8px;
-      font-size: 0.8rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-    }
-    .btn:hover {
-      background: var(--primary);
-      color: #fff;
-      border-color: var(--primary);
-      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #3b82f6, #2563eb);
-      border: none;
-      color: #fff;
-      font-weight: 600;
-      padding: 10px 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 14px rgba(59, 130, 246, 0.35);
-    }
-    .btn-primary:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
-    }
-
-    .control-group {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      margin-top: 12px;
-    }
-    .control-group label {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      display: flex;
-      justify-content: space-between;
-    }
-
-    input[type="range"] {
-      width: 100%;
-      height: 6px;
-      border-radius: 3px;
-      background: rgba(255, 255, 255, 0.1);
-      accent-color: var(--primary);
-      cursor: pointer;
-    }
-
-    select, input[type="text"] {
-      width: 100%;
-      padding: 10px;
-      background: rgba(15, 23, 42, 0.6);
-      border: 1px solid var(--border-color);
-      color: #fff;
-      border-radius: 8px;
-      font-size: 0.85rem;
-      outline: none;
-      transition: border 0.2s;
-    }
-    select:focus, input[type="text"]:focus {
-      border-color: var(--primary);
-    }
-
-    .main-area {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-      position: relative;
-    }
-
-    .canvas-container {
-      position: relative;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
-      overflow: hidden;
-      background: #181a20;
-    }
-
-    canvas { display: block; cursor: crosshair; }
-
-    .hint {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-top: 12px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .badge-paste {
-      background: rgba(6, 182, 212, 0.15);
-      color: var(--accent);
-      border: 1px solid rgba(6, 182, 212, 0.3);
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-weight: 600;
-      font-size: 0.75rem;
-    }
-  </style>
-</head>
-<body>
-
-  <header>
-    <div class="brand">
-      <div class="brand-icon"><i class="fa-solid fa-shirt"></i></div>
-      <div>
-        <h1>바람막이 로고 목업 스튜디오</h1>
-        <span>도안 위에 로고를 자유롭게 올리고 조절해보세요</span>
-      </div>
-    </div>
-    <button class="btn btn-primary" onclick="downloadImage()">
-      <i class="fa-solid fa-download"></i> 결과물 저장 (PNG)
-    </button>
-  </header>
-
-  <div class="app-body">
-    <div class="sidebar">
-
-      <div class="card">
-        <div class="section-title"><i class="fa-solid fa-upload"></i> 1. 로고 이미지 업로드</div>
-        <div class="file-input-wrapper">
-          <i class="fa-solid fa-cloud-arrow-up" style="font-size: 1.5rem; color: var(--primary); margin-bottom: 6px;"></i>
-          <div style="font-size:0.85rem; font-weight: 600;">파일 선택 또는 드래그</div>
-          <div style="font-size:0.75rem; color: var(--text-muted); margin-top: 4px;">
-            <span class="badge-paste">Ctrl + V</span> 복사된 이미지 붙여넣기 지원
-          </div>
-          <input type="file" id="logoInput" accept="image/*" onchange="handleLogoUpload(event)">
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="section-title"><i class="fa-solid fa-location-crosshairs"></i> 2. 로고 위치 퀵 프리셋</div>
-        <div class="preset-grid">
-          <button class="btn" onclick="setPreset('front-left')"><i class="fa-solid fa-arrow-left"></i> 전면 좌측</button>
-          <button class="btn" onclick="setPreset('front-right')">전면 우측 <i class="fa-solid fa-arrow-right"></i></button>
-          <button class="btn" onclick="setPreset('back-center')"><i class="fa-solid fa-align-center"></i> 후면 중앙</button>
-          <button class="btn" onclick="setPreset('back-sleeve')"><i class="fa-solid fa-hand"></i> 후면 소매</button>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="section-title"><i class="fa-solid fa-sliders"></i> 3. 로고 상세 변형</div>
-        <div class="control-group">
-          <label>크기 조절 <span id="valScale">100%</span></label>
-          <input type="range" id="scaleInput" min="10" max="300" value="100" oninput="updateLogo()">
-        </div>
-        <div class="control-group">
-          <label>회전 <span id="valRotate">0°</span></label>
-          <input type="range" id="rotateInput" min="-180" max="180" value="0" oninput="updateLogo()">
-        </div>
-        <div class="control-group">
-          <label>투명도 <span id="valOpacity">100%</span></label>
-          <input type="range" id="opacityInput" min="10" max="100" value="100" oninput="updateLogo()">
-        </div>
-        <div class="control-group">
-          <label>원단 블렌드 모드</label>
-          <select id="blendInput" onchange="updateLogo()">
-            <option value="source-over">일반 (Normal)</option>
-            <option value="multiply" selected>곱하기 (Multiply - 질감 살림)</option>
-            <option value="overlay">오버레이 (Overlay)</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="section-title"><i class="fa-solid fa-font"></i> 4. 텍스트 추가 (선택사항)</div>
-        <div class="control-group">
-          <input type="text" id="textInput" placeholder="후면 텍스트 문구 입력..." oninput="draw()">
-        </div>
-        <div class="control-group">
-          <label>글자 색상</label>
-          <input type="color" id="textColor" value="#ffffff" onchange="draw()" style="width:100%; height:36px; border:none; border-radius:6px; cursor:pointer;">
-        </div>
-      </div>
-
-    </div>
-
-    <div class="main-area">
-      <div class="canvas-container">
-        <canvas id="mockupCanvas" width="1024" height="512"></canvas>
-      </div>
-      <div class="hint">
-        <i class="fa-solid fa-circle-info"></i> 캔버스에서 마우스로 로고를 직접 클릭해 자유롭게 드래그해보세요.
-      </div>
-    </div>
-  </div>
-
-  <script>
-    const canvas = document.getElementById('mockupCanvas');
-    const ctx = canvas.getContext('2d');
-
-    let bgImg = new Image();
-    let logoImg = null;
-
-    let logoState = {
-      x: 235,
-      y: 190,
-      scale: 1,
-      rotate: 0,
-      opacity: 1,
-      blend: 'multiply'
-    };
-
-    let isDragging = false;
-    let dragOffsetX = 0;
-    let dragOffsetY = 0;
-
-    // GitHub 저장소의 mockup.png 자동 로드
-    bgImg.src = 'mockup.png';
-    bgImg.onload = () => draw();
-    bgImg.onerror = () => {
-      ctx.fillStyle = '#181a20';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = '#ef4444';
-      ctx.font = '16px sans-serif';
-      ctx.textAlign = 'center';
-      ctx.fillText('mockup.png 이미지를 불러올 수 없습니다.', canvas.width / 2, canvas.height / 2 - 10);
-      ctx.fillStyle = '#94a3b8';
-      ctx.font = '13px sans-serif';
-      ctx.fillText('GitHub 저장소에 올려두신 이미지 이름이 mockup.png인지 확인해 주세요.', canvas.width / 2, canvas.height / 2 + 15);
-    };
-
-    function applyLogoImage(img) {
-      logoImg = img;
-      const targetSize = 70;
-      logoState.scale = targetSize / Math.max(img.width, img.height);
-      document.getElementById('scaleInput').value = 100;
-      document.getElementById('valScale').innerText = '100%';
-      draw();
-    }
-
-    // Ctrl + V (붙여넣기) 이벤트 지원
-    window.addEventListener('paste', (e) => {
-      if (document.activeElement.tagName === 'INPUT' && document.activeElement.type === 'text') return;
-      const items = e.clipboardData && e.clipboardData.items;
-      if (!items) return;
-
-      for (let i = 0; i < items.length; i++) {
-        if (items[i].type.indexOf('image') !== -1) {
-          const file = items[i].getAsFile();
-          const reader = new FileReader();
-          reader.onload = (event) => {
-            const img = new Image();
-            img.onload = () => applyLogoImage(img);
-            img.src = event.target.result;
-          };
-          reader.readAsDataURL(file);
-          e.preventDefault();
-          break;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>바람막이 목업 커스텀 스튜디오</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <style>
+        body {
+            font-family: 'Noto Sans KR', 'Inter', sans-serif;
         }
-      }
-    });
 
-    function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.6);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
 
-      // 1. 바탕 바람막이 도안 그리기
-      if (bgImg.complete && bgImg.naturalWidth !== 0) {
-        ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
-      }
+        .bg-grid-pattern {
+            background-size: 24px 24px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased selection:bg-indigo-500 selection:text-white">
 
-      // 2. 로고 그리기
-      if (logoImg) {
-        ctx.save();
-        ctx.globalAlpha = logoState.opacity;
-        ctx.globalCompositeOperation = logoState.blend;
+    <!-- Header Navigation -->
+    <header class="border-b border-slate-800/80 bg-slate-900/90 backdrop-blur-md sticky top-0 z-50 px-4 lg:px-8 py-3.5 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+                <i class="fa-solid fa-shirt text-white text-lg"></i>
+            </div>
+            <div>
+                <h1 class="font-extrabold text-base sm:text-lg tracking-tight text-white flex items-center gap-2">
+                    WINDBREAKER MOCKUP
+                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">STUDIO</span>
+                </h1>
+                <p class="text-xs text-slate-400 font-medium">바람막이 도안 전용 커스텀 스튜디오</p>
+            </div>
+        </div>
 
-        ctx.translate(logoState.x, logoState.y);
-        ctx.rotate((logoState.rotate * Math.PI) / 180);
+        <div class="flex items-center gap-2 sm:gap-3">
+            <button id="btn-reset" class="px-3.5 py-2 text-xs sm:text-sm font-semibold rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition border border-slate-700/60 flex items-center gap-2">
+                <i class="fa-solid fa-rotate-left"></i>
+                <span class="hidden sm:inline">초기화</span>
+            </button>
+            <button id="btn-download" class="px-4 py-2 text-xs sm:text-sm font-bold rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white transition shadow-lg shadow-indigo-500/20 flex items-center gap-2">
+                <i class="fa-solid fa-download"></i>
+                <span>고화질 이미지 저장</span>
+            </button>
+        </div>
+    </header>
 
-        const w = logoImg.width * logoState.scale;
-        const h = logoImg.height * logoState.scale;
+    <!-- Main Workspace -->
+    <main class="flex-1 flex flex-col lg:flex-row overflow-hidden relative">
 
-        ctx.drawImage(logoImg, -w / 2, -h / 2, w, h);
-        ctx.restore();
-      }
+        <!-- Center Viewport -->
+        <section class="flex-1 flex flex-col items-center justify-center p-4 lg:p-8 bg-slate-950 bg-grid-pattern relative overflow-hidden select-none min-h-[500px]">
+            
+            <!-- Tip Banner -->
+            <div class="absolute top-4 left-4 z-20 flex items-center gap-2 bg-slate-900/90 backdrop-blur border border-slate-800 px-3.5 py-2 rounded-xl text-xs text-slate-300 shadow-xl">
+                <i class="fa-solid fa-hand-pointer text-indigo-400"></i>
+                <span>로고를 마우스로 **드래그**하거나 **Ctrl + V**로 이미지를 붙여넣으세요.</span>
+            </div>
 
-      // 3. 텍스트 문구 그리기
-      const txt = document.getElementById('textInput').value;
-      if (txt) {
-        ctx.save();
-        ctx.font = 'bold 20px sans-serif';
-        ctx.fillStyle = document.getElementById('textColor').value;
-        ctx.textAlign = 'center';
-        ctx.fillText(txt, 735, 340);
-        ctx.restore();
-      }
-    }
+            <!-- Canvas Container -->
+            <div id="canvas-wrapper" class="relative w-full max-w-[960px] aspect-[1.85/1] rounded-2xl shadow-2xl overflow-hidden border border-slate-800/80 bg-slate-900/60 flex items-center justify-center">
+                <canvas id="mockupCanvas" width="1200" height="650" class="w-full h-full object-contain cursor-grab active:cursor-grabbing"></canvas>
+            </div>
 
-    function handleLogoUpload(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const img = new Image();
-        img.onload = () => applyLogoImage(img);
-        img.src = event.target.result;
-      };
-      reader.readAsDataURL(file);
-    }
+            <!-- Status Indicator -->
+            <div class="mt-4 flex items-center gap-4 bg-slate-900/80 border border-slate-800 px-4 py-2 rounded-xl text-xs text-slate-400">
+                <span>캔버스 해상도: <strong class="text-slate-200 font-semibold">1200 x 650 px</strong></span>
+                <span class="border-l border-slate-800 pl-4">목업 상태: <strong id="mockup-status" class="text-indigo-400 font-semibold">mockup.png 로드 중...</strong></span>
+            </div>
+        </section>
 
-    function updateLogo() {
-      const scaleVal = document.getElementById('scaleInput').value;
-      const rotateVal = document.getElementById('rotateInput').value;
-      const opacityVal = document.getElementById('opacityInput').value;
-      const blendVal = document.getElementById('blendInput').value;
+        <!-- Right Control Sidebar -->
+        <aside class="w-full lg:w-[400px] bg-slate-900/95 border-t lg:border-t-0 lg:border-l border-slate-800 flex flex-col overflow-y-auto">
+            
+            <div class="p-6 space-y-6">
 
-      document.getElementById('valScale').innerText = scaleVal + '%';
-      document.getElementById('valRotate').innerText = rotateVal + '°';
-      document.getElementById('valOpacity').innerText = opacityVal + '%';
+                <!-- 1. Mockup Image Input -->
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <label class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
+                            <i class="fa-solid fa-image text-indigo-400"></i>
+                            <span>1. 바람막이 목업 바탕 이미지</span>
+                        </label>
+                        <span id="mockup-badge" class="text-[10px] text-indigo-400 font-semibold bg-indigo-500/10 border border-indigo-500/20 px-2 py-0.5 rounded-md">mockup.png</span>
+                    </div>
 
-      if (logoImg) {
-        const baseSize = 70;
-        logoState.scale = (baseSize / Math.max(logoImg.width, logoImg.height)) * (scaleVal / 100);
-      }
-      logoState.rotate = parseFloat(rotateVal);
-      logoState.opacity = opacityVal / 100;
-      logoState.blend = blendVal;
+                    <div id="mockup-drop-zone" class="border-2 border-dashed border-indigo-500/50 bg-indigo-950/20 hover:bg-indigo-900/30 rounded-2xl p-3.5 text-center transition cursor-pointer flex items-center gap-3">
+                        <input type="file" id="mockup-file-input" accept="image/*" class="hidden">
+                        <div class="w-10 h-10 rounded-xl bg-indigo-600/20 border border-indigo-500/30 text-indigo-400 flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-upload"></i>
+                        </div>
+                        <div class="text-left">
+                            <div class="text-xs font-bold text-slate-200">목업 이미지 변경</div>
+                            <p class="text-[11px] text-slate-400">기본 파일 외 다른 도안 변경 선택 가능</p>
+                        </div>
+                    </div>
+                </div>
 
-      draw();
-    }
+                <hr class="border-slate-800">
 
-    function setPreset(preset) {
-      if (!logoImg) {
-        alert('먼저 로고 이미지를 업로드하거나 Ctrl+V로 붙여넣어주세요.');
-        return;
-      }
-      switch (preset) {
-        case 'front-left':
-          logoState.x = 235; logoState.y = 190; break;
-        case 'front-right':
-          logoState.x = 310; logoState.y = 190; break;
-        case 'back-center':
-          logoState.x = 735; logoState.y = 230; break;
-        case 'back-sleeve':
-          logoState.x = 945; logoState.y = 425; break;
-      }
-      draw();
-    }
+                <!-- 2. Logo Upload & Preset Selection -->
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <label class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
+                            <i class="fa-solid fa-stamp text-indigo-400"></i>
+                            <span>2. 로고 이미지 업로드</span>
+                        </label>
+                        <span class="text-[10px] font-bold px-2 py-0.5 rounded-md bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">Ctrl + V 지원</span>
+                    </div>
+                    
+                    <div id="logo-drop-zone" class="border-2 border-dashed border-slate-700 hover:border-indigo-500 bg-slate-800/40 hover:bg-slate-800/80 rounded-2xl p-4 text-center transition cursor-pointer group">
+                        <input type="file" id="logo-file-input" accept="image/*" class="hidden">
+                        <div class="w-9 h-9 rounded-xl bg-slate-700/50 border border-slate-600 text-slate-300 flex items-center justify-center mx-auto mb-1.5 group-hover:scale-110 group-hover:bg-indigo-500 group-hover:text-white transition">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                        </div>
+                        <div class="text-xs font-bold text-slate-200">로고 이미지 업로드 (PNG, SVG)</div>
+                        <p class="text-[11px] text-slate-400 mt-0.5">클립보드 이미지 <span class="text-cyan-400 font-semibold">Ctrl + V</span> 붙여넣기 가능</p>
+                    </div>
+                </div>
 
-    // 마우스 드래그 조작
-    canvas.addEventListener('mousedown', (e) => {
-      if (!logoImg) return;
-      const rect = canvas.getBoundingClientRect();
-      const scaleX = canvas.width / rect.width;
-      const scaleY = canvas.height / rect.height;
-      const mouseX = (e.clientX - rect.left) * scaleX;
-      const mouseY = (e.clientY - rect.top) * scaleY;
+                <hr class="border-slate-800">
 
-      const w = logoImg.width * logoState.scale;
-      const h = logoImg.height * logoState.scale;
+                <!-- 3. Position Presets -->
+                <div class="space-y-3">
+                    <label class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
+                        <i class="fa-solid fa-crosshairs text-indigo-400"></i>
+                        <span>3. 부착 위치 원클릭 설정</span>
+                    </label>
 
-      if (Math.abs(mouseX - logoState.x) < w / 2 && Math.abs(mouseY - logoState.y) < h / 2) {
-        isDragging = true;
-        dragOffsetX = mouseX - logoState.x;
-        dragOffsetY = mouseY - logoState.y;
-      }
-    });
+                    <div class="grid grid-cols-2 gap-2">
+                        <button data-pos="front-left" class="pos-btn p-2.5 rounded-xl border border-slate-800 bg-slate-800/60 hover:bg-slate-800 hover:border-indigo-500/50 text-left transition group">
+                            <div class="text-xs font-bold text-slate-200 group-hover:text-indigo-300">전면 좌측 가슴</div>
+                            <div class="text-[10px] text-slate-400">Front Left Chest</div>
+                        </button>
+                        <button data-pos="front-right" class="pos-btn p-2.5 rounded-xl border border-slate-800 bg-slate-800/60 hover:bg-slate-800 hover:border-indigo-500/50 text-left transition group">
+                            <div class="text-xs font-bold text-slate-200 group-hover:text-indigo-300">전면 우측 가슴</div>
+                            <div class="text-[10px] text-slate-400">Front Right Chest</div>
+                        </button>
+                        <button data-pos="back-center" class="pos-btn p-2.5 rounded-xl border border-slate-800 bg-slate-800/60 hover:bg-slate-800 hover:border-indigo-500/50 text-left transition group">
+                            <div class="text-xs font-bold text-slate-200 group-hover:text-indigo-300">후면 등 중앙</div>
+                            <div class="text-[10px] text-slate-400">Back Center</div>
+                        </button>
+                        <button data-pos="back-sleeve" class="pos-btn p-2.5 rounded-xl border border-slate-800 bg-slate-800/60 hover:bg-slate-800 hover:border-indigo-500/50 text-left transition group">
+                            <div class="text-xs font-bold text-slate-200 group-hover:text-indigo-300">후면 소매 하단</div>
+                            <div class="text-[10px] text-slate-400">Back Sleeve Cuff</div>
+                        </button>
+                    </div>
+                </div>
 
-    canvas.addEventListener('mousemove', (e) => {
-      if (!isDragging) return;
-      const rect = canvas.getBoundingClientRect();
-      const scaleX = canvas.width / rect.width;
-      const scaleY = canvas.height / rect.height;
-      logoState.x = (e.clientX - rect.left) * scaleX - dragOffsetX;
-      logoState.y = (e.clientY - rect.top) * scaleY - dragOffsetY;
-      draw();
-    });
+                <hr class="border-slate-800">
 
-    window.addEventListener('mouseup', () => { isDragging = false; });
+                <!-- 4. Detailed Controls & Blend Mode -->
+                <div class="space-y-4">
+                    <label class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
+                        <i class="fa-solid fa-sliders text-indigo-400"></i>
+                        <span>4. 상세 옵션 및 원단 혼합 효과</span>
+                    </label>
 
-    function downloadImage() {
-      const link = document.createElement('a');
-      link.download = 'windbreaker-mockup-result.png';
-      link.href = canvas.toDataURL('image/png');
-      link.click();
-    }
-  </script>
+                    <!-- Blend Mode -->
+                    <div>
+                        <div class="flex justify-between text-xs mb-1.5 font-medium">
+                            <span class="text-slate-300">원단 합성 블렌드 모드</span>
+                            <span class="text-xs text-slate-400 font-normal">자연스러운 로고 합성</span>
+                        </div>
+                        <select id="blend-mode" class="w-full bg-slate-800 border border-slate-700 text-slate-200 text-xs rounded-xl p-2.5 focus:outline-none focus:border-indigo-500">
+                            <option value="source-over">기본 (Normal)</option>
+                            <option value="multiply" selected>곱하기 (Multiply - 질감 살리기)</option>
+                            <option value="overlay">오버레이 (Overlay - 음영 조화)</option>
+                            <option value="screen">스크린 (Screen)</option>
+                        </select>
+                    </div>
+
+                    <!-- Scale Slider -->
+                    <div>
+                        <div class="flex justify-between text-xs mb-1.5 font-medium">
+                            <span class="text-slate-300">로고 크기 (Scale)</span>
+                            <span id="scale-val" class="text-indigo-400 font-bold">100%</span>
+                        </div>
+                        <input type="range" id="logo-scale" min="10" max="300" value="100" class="w-full accent-indigo-500 bg-slate-800 h-2 rounded-lg cursor-pointer">
+                    </div>
+
+                    <!-- Rotation Slider -->
+                    <div>
+                        <div class="flex justify-between text-xs mb-1.5 font-medium">
+                            <span class="text-slate-300">회전 각도 (Rotation)</span>
+                            <span id="rotate-val" class="text-indigo-400 font-bold">0°</span>
+                        </div>
+                        <input type="range" id="logo-rotate" min="-180" max="180" value="0" class="w-full accent-indigo-500 bg-slate-800 h-2 rounded-lg cursor-pointer">
+                    </div>
+
+                    <!-- Opacity Slider -->
+                    <div>
+                        <div class="flex justify-between text-xs mb-1.5 font-medium">
+                            <span class="text-slate-300">투명도 (Opacity)</span>
+                            <span id="opacity-val" class="text-indigo-400 font-bold">100%</span>
+                        </div>
+                        <input type="range" id="logo-opacity" min="10" max="100" value="100" class="w-full accent-indigo-500 bg-slate-800 h-2 rounded-lg cursor-pointer">
+                    </div>
+                </div>
+
+                <hr class="border-slate-800">
+
+                <!-- 5. Optional Text -->
+                <div class="space-y-3">
+                    <label class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
+                        <i class="fa-solid fa-font text-indigo-400"></i>
+                        <span>5. 후면 문구 텍스트 추가</span>
+                    </label>
+                    <input type="text" id="text-input" placeholder="등 하단 텍스트 문구 입력..." class="w-full bg-slate-800 border border-slate-700 text-slate-200 text-xs rounded-xl p-2.5 focus:outline-none focus:border-indigo-500">
+                    
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs text-slate-400">텍스트 색상:</span>
+                        <input type="color" id="text-color" value="#ffffff" class="w-8 h-8 rounded-lg bg-transparent border border-slate-700 cursor-pointer">
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Footer Info -->
+            <div class="mt-auto p-4 border-t border-slate-800 bg-slate-950/60 text-[11px] text-slate-500 flex justify-between items-center">
+                <span>Interactive Mockup Engine</span>
+                <span class="text-emerald-400 font-medium"><i class="fa-solid fa-circle-check"></i> Ready</span>
+            </div>
+        </aside>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const canvas = document.getElementById('mockupCanvas');
+            const ctx = canvas.getContext('2d');
+            const mockupStatus = document.getElementById('mockup-status');
+
+            let baseImg = new Image();
+            let logoImg = null;
+
+            // Interactive state
+            const state = {
+                x: 275,
+                y: 220,
+                scale: 1.0,
+                rotation: 0,
+                opacity: 1.0,
+                blendMode: 'multiply',
+                isDragging: false,
+                dragStartX: 0,
+                dragStartY: 0
+            };
+
+            // Placement Presets (1200x650 canvas relative)
+            const PRESETS = {
+                'front-left': { x: 275, y: 220, scale: 1.0, rotation: 0 },
+                'front-right': { x: 360, y: 220, scale: 1.0, rotation: 0 },
+                'back-center': { x: 860, y: 270, scale: 1.8, rotation: 0 },
+                'back-sleeve': { x: 1105, y: 500, scale: 0.8, rotation: 0 }
+            };
+
+            // Load default mockup.png
+            baseImg.src = 'mockup.png';
+            baseImg.onload = () => {
+                mockupStatus.textContent = 'mockup.png 정상 로드됨';
+                render();
+            };
+            baseImg.onerror = () => {
+                mockupStatus.textContent = 'mockup.png 로드 실패 (파일 경로 확인 필요)';
+                mockupStatus.className = 'text-rose-400 font-semibold';
+                render();
+            };
+
+            // Apply uploaded or pasted logo image
+            function setLogoImage(img) {
+                logoImg = img;
+                state.scale = 1.0;
+                document.getElementById('logo-scale').value = 100;
+                document.getElementById('scale-val').textContent = '100%';
+                render();
+            }
+
+            // Clipboard Ctrl + V Event Listener
+            window.addEventListener('paste', (e) => {
+                if (document.activeElement.tagName === 'INPUT' && document.activeElement.type === 'text') return;
+                const items = e.clipboardData && e.clipboardData.items;
+                if (!items) return;
+
+                for (let i = 0; i < items.length; i++) {
+                    if (items[i].type.indexOf('image') !== -1) {
+                        const file = items[i].getAsFile();
+                        const reader = new FileReader();
+                        reader.onload = (evt) => {
+                            const img = new Image();
+                            img.onload = () => setLogoImage(img);
+                            img.src = evt.target.result;
+                        };
+                        reader.readAsDataURL(file);
+                        e.preventDefault();
+                        break;
+                    }
+                }
+            });
+
+            // Main Canvas Render Engine
+            function render() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // 1. Render Base Mockup
+                if (baseImg.complete && baseImg.naturalWidth !== 0) {
+                    ctx.drawImage(baseImg, 0, 0, canvas.width, canvas.height);
+                } else {
+                    ctx.fillStyle = '#0f172a';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    ctx.fillStyle = '#94a3b8';
+                    ctx.font = '16px Noto Sans KR';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('mockup.png 도안을 불러오는 중이거나 찾을 수 없습니다.', canvas.width / 2, canvas.height / 2);
+                }
+
+                // 2. Render Overlay Logo
+                if (logoImg && logoImg.complete) {
+                    ctx.save();
+                    
+                    ctx.translate(state.x, state.y);
+                    ctx.rotate((state.rotation * Math.PI) / 180);
+                    ctx.globalAlpha = state.opacity;
+                    ctx.globalCompositeOperation = state.blendMode;
+
+                    const aspect = logoImg.height / logoImg.width;
+                    const baseWidth = 80 * state.scale;
+                    const baseHeight = baseWidth * aspect;
+
+                    ctx.drawImage(logoImg, -baseWidth / 2, -baseHeight / 2, baseWidth, baseHeight);
+                    ctx.restore();
+
+                    // Drag handles
+                    ctx.save();
+                    ctx.translate(state.x, state.y);
+                    ctx.rotate((state.rotation * Math.PI) / 180);
+
+                    ctx.strokeStyle = '#6366f1';
+                    ctx.lineWidth = 2;
+                    ctx.setLineDash([4, 4]);
+                    ctx.strokeRect(-baseWidth / 2 - 4, -baseHeight / 2 - 4, baseWidth + 8, baseHeight + 8);
+
+                    ctx.fillStyle = '#818cf8';
+                    ctx.fillRect(-baseWidth / 2 - 8, -baseHeight / 2 - 8, 8, 8);
+                    ctx.fillRect(baseWidth / 2, -baseHeight / 2 - 8, 8, 8);
+                    ctx.fillRect(-baseWidth / 2 - 8, baseHeight / 2, 8, 8);
+                    ctx.fillRect(baseWidth / 2, baseHeight / 2, 8, 8);
+
+                    ctx.restore();
+                }
+
+                // 3. Optional Text
+                const textVal = document.getElementById('text-input').value;
+                if (textVal) {
+                    ctx.save();
+                    ctx.font = 'bold 24px Noto Sans KR, sans-serif';
+                    ctx.fillStyle = document.getElementById('text-color').value;
+                    ctx.textAlign = 'center';
+                    ctx.fillText(textVal, 860, 420);
+                    ctx.restore();
+                }
+            }
+
+            function getCanvasCoords(e) {
+                const rect = canvas.getBoundingClientRect();
+                const scaleX = canvas.width / rect.width;
+                const scaleY = canvas.height / rect.height;
+                return {
+                    x: (e.clientX - rect.left) * scaleX,
+                    y: (e.clientY - rect.top) * scaleY
+                };
+            }
+
+            // Drag Events
+            canvas.addEventListener('mousedown', (e) => {
+                if (!logoImg) return;
+                const coords = getCanvasCoords(e);
+                const dist = Math.hypot(coords.x - state.x, coords.y - state.y);
+                if (dist < 100 * state.scale) {
+                    state.isDragging = true;
+                    state.dragStartX = coords.x - state.x;
+                    state.dragStartY = coords.y - state.y;
+                }
+            });
+
+            window.addEventListener('mousemove', (e) => {
+                if (!state.isDragging) return;
+                const coords = getCanvasCoords(e);
+                state.x = coords.x - state.dragStartX;
+                state.y = coords.y - state.dragStartY;
+                render();
+            });
+
+            window.addEventListener('mouseup', () => {
+                if (state.isDragging) {
+                    state.isDragging = false;
+                    render();
+                }
+            });
+
+            // File Uploads
+            const mockupDropZone = document.getElementById('mockup-drop-zone');
+            const mockupFileInput = document.getElementById('mockup-file-input');
+
+            mockupDropZone.addEventListener('click', () => mockupFileInput.click());
+            mockupFileInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (evt) => {
+                        baseImg = new Image();
+                        baseImg.onload = () => {
+                            mockupStatus.textContent = `업로드 도안 (${file.name})`;
+                            render();
+                        };
+                        baseImg.src = evt.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            const logoDropZone = document.getElementById('logo-drop-zone');
+            const logoFileInput = document.getElementById('logo-file-input');
+
+            logoDropZone.addEventListener('click', () => logoFileInput.click());
+            logoFileInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (evt) => {
+                        const img = new Image();
+                        img.onload = () => setLogoImage(img);
+                        img.src = evt.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Sliders & Text
+            const scaleInput = document.getElementById('logo-scale');
+            const scaleVal = document.getElementById('scale-val');
+            scaleInput.addEventListener('input', (e) => {
+                state.scale = e.target.value / 100;
+                scaleVal.textContent = `${e.target.value}%`;
+                render();
+            });
+
+            const rotateInput = document.getElementById('logo-rotate');
+            const rotateVal = document.getElementById('rotate-val');
+            rotateInput.addEventListener('input', (e) => {
+                state.rotation = parseInt(e.target.value);
+                rotateVal.textContent = `${e.target.value}°`;
+                render();
+            });
+
+            const opacityInput = document.getElementById('logo-opacity');
+            const opacityVal = document.getElementById('opacity-val');
+            opacityInput.addEventListener('input', (e) => {
+                state.opacity = e.target.value / 100;
+                opacityVal.textContent = `${e.target.value}%`;
+                render();
+            });
+
+            const blendSelect = document.getElementById('blend-mode');
+            blendSelect.addEventListener('change', (e) => {
+                state.blendMode = e.target.value;
+                render();
+            });
+
+            document.getElementById('text-input').addEventListener('input', render);
+            document.getElementById('text-color').addEventListener('change', render);
+
+            // Presets
+            document.querySelectorAll('[data-pos]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const key = btn.dataset.pos;
+                    if (PRESETS[key]) {
+                        const p = PRESETS[key];
+                        state.x = p.x;
+                        state.y = p.y;
+                        state.scale = p.scale;
+                        state.rotation = p.rotation;
+
+                        scaleInput.value = Math.round(p.scale * 100);
+                        scaleVal.textContent = `${Math.round(p.scale * 100)}%`;
+                        rotateInput.value = p.rotation;
+                        rotateVal.textContent = `${p.rotation}°`;
+
+                        render();
+                    }
+                });
+            });
+
+            // Reset
+            document.getElementById('btn-reset').addEventListener('click', () => {
+                state.x = 275;
+                state.y = 220;
+                state.scale = 1.0;
+                state.rotation = 0;
+                state.opacity = 1.0;
+                state.blendMode = 'multiply';
+
+                scaleInput.value = 100;
+                scaleVal.textContent = '100%';
+                rotateInput.value = 0;
+                rotateVal.textContent = '0°';
+                opacityInput.value = 100;
+                opacityVal.textContent = '100%';
+                blendSelect.value = 'multiply';
+                document.getElementById('text-input').value = '';
+
+                render();
+            });
+
+            // Download High Res Image
+            document.getElementById('btn-download').addEventListener('click', () => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                if (baseImg.complete) ctx.drawImage(baseImg, 0, 0, canvas.width, canvas.height);
+                
+                if (logoImg && logoImg.complete) {
+                    ctx.save();
+                    ctx.translate(state.x, state.y);
+                    ctx.rotate((state.rotation * Math.PI) / 180);
+                    ctx.globalAlpha = state.opacity;
+                    ctx.globalCompositeOperation = state.blendMode;
+                    const aspect = logoImg.height / logoImg.width;
+                    const baseWidth = 80 * state.scale;
+                    const baseHeight = baseWidth * aspect;
+                    ctx.drawImage(logoImg, -baseWidth / 2, -baseHeight / 2, baseWidth, baseHeight);
+                    ctx.restore();
+                }
+
+                const textVal = document.getElementById('text-input').value;
+                if (textVal) {
+                    ctx.save();
+                    ctx.font = 'bold 24px Noto Sans KR, sans-serif';
+                    ctx.fillStyle = document.getElementById('text-color').value;
+                    ctx.textAlign = 'center';
+                    ctx.fillText(textVal, 860, 420);
+                    ctx.restore();
+                }
+
+                const link = document.createElement('a');
+                link.download = 'windbreaker-mockup-result.png';
+                link.href = canvas.toDataURL('image/png', 1.0);
+                link.click();
+
+                render();
+            });
+
+        });
+    </script>
 </body>
 </html>
