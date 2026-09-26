@@ -8,25 +8,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
     <style>
-        body {
-            font-family: 'Noto Sans KR', 'Inter', sans-serif;
-        }
-
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: rgba(15, 23, 42, 0.6);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(255, 255, 255, 0.25);
-        }
-
+        body { font-family: 'Noto Sans KR', 'Inter', sans-serif; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.6); }
+        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.25); }
         .bg-grid-pattern {
             background-size: 24px 24px;
             background-image: 
@@ -69,19 +55,15 @@
 
         <!-- Center Viewport -->
         <section class="flex-1 flex flex-col items-center justify-center p-4 lg:p-8 bg-slate-950 bg-grid-pattern relative overflow-hidden select-none min-h-[500px]">
-            
-            <!-- Tip Banner -->
             <div class="absolute top-4 left-4 z-20 flex items-center gap-2 bg-slate-900/90 backdrop-blur border border-slate-800 px-3.5 py-2 rounded-xl text-xs text-slate-300 shadow-xl">
                 <i class="fa-solid fa-hand-pointer text-indigo-400"></i>
                 <span>로고를 마우스로 **드래그**하거나 **Ctrl + V**로 이미지를 붙여넣으세요.</span>
             </div>
 
-            <!-- Canvas Container -->
             <div id="canvas-wrapper" class="relative w-full max-w-[960px] aspect-[1.85/1] rounded-2xl shadow-2xl overflow-hidden border border-slate-800/80 bg-slate-900/60 flex items-center justify-center">
                 <canvas id="mockupCanvas" width="1200" height="650" class="w-full h-full object-contain cursor-grab active:cursor-grabbing"></canvas>
             </div>
 
-            <!-- Status Indicator -->
             <div class="mt-4 flex items-center gap-4 bg-slate-900/80 border border-slate-800 px-4 py-2 rounded-xl text-xs text-slate-400">
                 <span>캔버스 해상도: <strong class="text-slate-200 font-semibold">1200 x 650 px</strong></span>
                 <span class="border-l border-slate-800 pl-4">목업 상태: <strong id="mockup-status" class="text-indigo-400 font-semibold">mockup.png 로드 중...</strong></span>
@@ -90,7 +72,6 @@
 
         <!-- Right Control Sidebar -->
         <aside class="w-full lg:w-[400px] bg-slate-900/95 border-t lg:border-t-0 lg:border-l border-slate-800 flex flex-col overflow-y-auto">
-            
             <div class="p-6 space-y-6">
 
                 <!-- 1. Mockup Image Input -->
@@ -100,7 +81,7 @@
                             <i class="fa-solid fa-image text-indigo-400"></i>
                             <span>1. 바람막이 목업 바탕 이미지</span>
                         </label>
-                        <span id="mockup-badge" class="text-[10px] text-indigo-400 font-semibold bg-indigo-500/10 border border-indigo-500/20 px-2 py-0.5 rounded-md">mockup.png</span>
+                        <span class="text-[10px] text-indigo-400 font-semibold bg-indigo-500/10 border border-indigo-500/20 px-2 py-0.5 rounded-md">mockup.png</span>
                     </div>
 
                     <div id="mockup-drop-zone" class="border-2 border-dashed border-indigo-500/50 bg-indigo-950/20 hover:bg-indigo-900/30 rounded-2xl p-3.5 text-center transition cursor-pointer flex items-center gap-3">
@@ -117,7 +98,7 @@
 
                 <hr class="border-slate-800">
 
-                <!-- 2. Logo Upload & Preset Selection -->
+                <!-- 2. Logo Upload -->
                 <div class="space-y-3">
                     <div class="flex items-center justify-between">
                         <label class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
@@ -168,14 +149,13 @@
 
                 <hr class="border-slate-800">
 
-                <!-- 4. Detailed Controls & Blend Mode -->
+                <!-- 4. Controls -->
                 <div class="space-y-4">
                     <label class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
                         <i class="fa-solid fa-sliders text-indigo-400"></i>
                         <span>4. 상세 옵션 및 원단 혼합 효과</span>
                     </label>
 
-                    <!-- Blend Mode -->
                     <div>
                         <div class="flex justify-between text-xs mb-1.5 font-medium">
                             <span class="text-slate-300">원단 합성 블렌드 모드</span>
@@ -189,7 +169,6 @@
                         </select>
                     </div>
 
-                    <!-- Scale Slider -->
                     <div>
                         <div class="flex justify-between text-xs mb-1.5 font-medium">
                             <span class="text-slate-300">로고 크기 (Scale)</span>
@@ -198,7 +177,6 @@
                         <input type="range" id="logo-scale" min="10" max="300" value="100" class="w-full accent-indigo-500 bg-slate-800 h-2 rounded-lg cursor-pointer">
                     </div>
 
-                    <!-- Rotation Slider -->
                     <div>
                         <div class="flex justify-between text-xs mb-1.5 font-medium">
                             <span class="text-slate-300">회전 각도 (Rotation)</span>
@@ -207,7 +185,6 @@
                         <input type="range" id="logo-rotate" min="-180" max="180" value="0" class="w-full accent-indigo-500 bg-slate-800 h-2 rounded-lg cursor-pointer">
                     </div>
 
-                    <!-- Opacity Slider -->
                     <div>
                         <div class="flex justify-between text-xs mb-1.5 font-medium">
                             <span class="text-slate-300">투명도 (Opacity)</span>
@@ -219,7 +196,7 @@
 
                 <hr class="border-slate-800">
 
-                <!-- 5. Optional Text -->
+                <!-- 5. Text -->
                 <div class="space-y-3">
                     <label class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
                         <i class="fa-solid fa-font text-indigo-400"></i>
@@ -235,7 +212,6 @@
 
             </div>
 
-            <!-- Footer Info -->
             <div class="mt-auto p-4 border-t border-slate-800 bg-slate-950/60 text-[11px] text-slate-500 flex justify-between items-center">
                 <span>Interactive Mockup Engine</span>
                 <span class="text-emerald-400 font-medium"><i class="fa-solid fa-circle-check"></i> Ready</span>
@@ -253,11 +229,19 @@
             let baseImg = new Image();
             let logoImg = null;
 
-            // Interactive state
+            // 도안(1200 x 650) 이미지 비율 기준 정밀 보정된 좌표
+            const DEFAULT_POS = { x: 380, y: 260 }; // 전면 좌측 가슴
+            const PRESETS = {
+                'front-left':  { x: 380, y: 260, scale: 0.9, rotation: 0 },  // 전면 왼쪽 가슴 (착용자 기준 오른쪽 가슴)
+                'front-right': { x: 220, y: 260, scale: 0.9, rotation: 0 },  // 전면 오른쪽 가슴 (착용자 기준 왼쪽 가슴)
+                'back-center': { x: 880, y: 310, scale: 1.8, rotation: 0 },  // 후면 등 중앙
+                'back-sleeve': { x: 1100, y: 500, scale: 0.8, rotation: 15 } // 후면 소매 하단
+            };
+
             const state = {
-                x: 275,
-                y: 220,
-                scale: 1.0,
+                x: DEFAULT_POS.x,
+                y: DEFAULT_POS.y,
+                scale: 0.9,
                 rotation: 0,
                 opacity: 1.0,
                 blendMode: 'multiply',
@@ -266,36 +250,22 @@
                 dragStartY: 0
             };
 
-            // Placement Presets (1200x650 canvas relative)
-            const PRESETS = {
-                'front-left': { x: 275, y: 220, scale: 1.0, rotation: 0 },
-                'front-right': { x: 360, y: 220, scale: 1.0, rotation: 0 },
-                'back-center': { x: 860, y: 270, scale: 1.8, rotation: 0 },
-                'back-sleeve': { x: 1105, y: 500, scale: 0.8, rotation: 0 }
-            };
-
-            // Load default mockup.png
             baseImg.src = 'mockup.png';
             baseImg.onload = () => {
                 mockupStatus.textContent = 'mockup.png 정상 로드됨';
                 render();
             };
             baseImg.onerror = () => {
-                mockupStatus.textContent = 'mockup.png 로드 실패 (파일 경로 확인 필요)';
+                mockupStatus.textContent = 'mockup.png 로드 실패 (파일명 확인 필요)';
                 mockupStatus.className = 'text-rose-400 font-semibold';
                 render();
             };
 
-            // Apply uploaded or pasted logo image
             function setLogoImage(img) {
                 logoImg = img;
-                state.scale = 1.0;
-                document.getElementById('logo-scale').value = 100;
-                document.getElementById('scale-val').textContent = '100%';
                 render();
             }
 
-            // Clipboard Ctrl + V Event Listener
             window.addEventListener('paste', (e) => {
                 if (document.activeElement.tagName === 'INPUT' && document.activeElement.type === 'text') return;
                 const items = e.clipboardData && e.clipboardData.items;
@@ -317,11 +287,9 @@
                 }
             });
 
-            // Main Canvas Render Engine
             function render() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-                // 1. Render Base Mockup
                 if (baseImg.complete && baseImg.naturalWidth !== 0) {
                     ctx.drawImage(baseImg, 0, 0, canvas.width, canvas.height);
                 } else {
@@ -330,13 +298,11 @@
                     ctx.fillStyle = '#94a3b8';
                     ctx.font = '16px Noto Sans KR';
                     ctx.textAlign = 'center';
-                    ctx.fillText('mockup.png 도안을 불러오는 중이거나 찾을 수 없습니다.', canvas.width / 2, canvas.height / 2);
+                    ctx.fillText('mockup.png 도안을 불러올 수 없습니다.', canvas.width / 2, canvas.height / 2);
                 }
 
-                // 2. Render Overlay Logo
                 if (logoImg && logoImg.complete) {
                     ctx.save();
-                    
                     ctx.translate(state.x, state.y);
                     ctx.rotate((state.rotation * Math.PI) / 180);
                     ctx.globalAlpha = state.opacity;
@@ -349,7 +315,6 @@
                     ctx.drawImage(logoImg, -baseWidth / 2, -baseHeight / 2, baseWidth, baseHeight);
                     ctx.restore();
 
-                    // Drag handles
                     ctx.save();
                     ctx.translate(state.x, state.y);
                     ctx.rotate((state.rotation * Math.PI) / 180);
@@ -368,14 +333,13 @@
                     ctx.restore();
                 }
 
-                // 3. Optional Text
                 const textVal = document.getElementById('text-input').value;
                 if (textVal) {
                     ctx.save();
                     ctx.font = 'bold 24px Noto Sans KR, sans-serif';
                     ctx.fillStyle = document.getElementById('text-color').value;
                     ctx.textAlign = 'center';
-                    ctx.fillText(textVal, 860, 420);
+                    ctx.fillText(textVal, 880, 440); // 후면 등 하단 위치로 보정
                     ctx.restore();
                 }
             }
@@ -390,7 +354,6 @@
                 };
             }
 
-            // Drag Events
             canvas.addEventListener('mousedown', (e) => {
                 if (!logoImg) return;
                 const coords = getCanvasCoords(e);
@@ -455,7 +418,7 @@
                 }
             });
 
-            // Sliders & Text
+            // Sliders
             const scaleInput = document.getElementById('logo-scale');
             const scaleVal = document.getElementById('scale-val');
             scaleInput.addEventListener('input', (e) => {
@@ -489,7 +452,7 @@
             document.getElementById('text-input').addEventListener('input', render);
             document.getElementById('text-color').addEventListener('change', render);
 
-            // Presets
+            // Presets Click Handler
             document.querySelectorAll('[data-pos]').forEach(btn => {
                 btn.addEventListener('click', () => {
                     const key = btn.dataset.pos;
@@ -512,15 +475,15 @@
 
             // Reset
             document.getElementById('btn-reset').addEventListener('click', () => {
-                state.x = 275;
-                state.y = 220;
-                state.scale = 1.0;
+                state.x = DEFAULT_POS.x;
+                state.y = DEFAULT_POS.y;
+                state.scale = 0.9;
                 state.rotation = 0;
                 state.opacity = 1.0;
                 state.blendMode = 'multiply';
 
-                scaleInput.value = 100;
-                scaleVal.textContent = '100%';
+                scaleInput.value = 90;
+                scaleVal.textContent = '90%';
                 rotateInput.value = 0;
                 rotateVal.textContent = '0°';
                 opacityInput.value = 100;
@@ -531,7 +494,7 @@
                 render();
             });
 
-            // Download High Res Image
+            // High Res Export
             document.getElementById('btn-download').addEventListener('click', () => {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 if (baseImg.complete) ctx.drawImage(baseImg, 0, 0, canvas.width, canvas.height);
@@ -555,7 +518,7 @@
                     ctx.font = 'bold 24px Noto Sans KR, sans-serif';
                     ctx.fillStyle = document.getElementById('text-color').value;
                     ctx.textAlign = 'center';
-                    ctx.fillText(textVal, 860, 420);
+                    ctx.fillText(textVal, 880, 440);
                     ctx.restore();
                 }
 
