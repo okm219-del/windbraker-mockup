@@ -230,13 +230,22 @@
             let logoImg = null;
 
             // 도안(1200 x 650) 이미지 비율 기준 정밀 보정된 좌표
-            const DEFAULT_POS = { x: 380, y: 260 }; // 전면 좌측 가슴
-            const PRESETS = {
-                'front-left':  { x: 380, y: 260, scale: 0.9, rotation: 0 },  // 전면 왼쪽 가슴 (착용자 기준 오른쪽 가슴)
-                'front-right': { x: 220, y: 260, scale: 0.9, rotation: 0 },  // 전면 오른쪽 가슴 (착용자 기준 왼쪽 가슴)
-                'back-center': { x: 880, y: 310, scale: 1.8, rotation: 0 },  // 후면 등 중앙
-                'back-sleeve': { x: 1100, y: 500, scale: 0.8, rotation: 15 } // 후면 소매 하단
-            };
+            // 도안(1200 x 650) 기준 정밀 보정 좌표
+const DEFAULT_POS = { x: 230, y: 280 }; // 기본 초기 위치 (착용자 기준 왼쪽 가슴)
+
+const PRESETS = {
+    // 착용자 기준 왼쪽 가슴 (보는 사람 기준 화면 왼쪽)
+    'front-left':  { x: 230, y: 280, scale: 0.8, rotation: 0 },  
+    
+    // 착용자 기준 오른쪽 가슴 (보는 사람 기준 화면 오른쪽)
+    'front-right': { x: 370, y: 280, scale: 0.8, rotation: 0 },  
+    
+    // 후면 등 중앙
+    'back-center': { x: 880, y: 310, scale: 1.8, rotation: 0 },  
+    
+    // 후면 소매 하단
+    'back-sleeve': { x: 1100, y: 500, scale: 0.8, rotation: 15 } 
+};
 
             const state = {
                 x: DEFAULT_POS.x,
